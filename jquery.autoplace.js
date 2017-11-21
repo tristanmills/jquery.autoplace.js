@@ -37,9 +37,13 @@
 
 		autoplaceLinker.push({'id': element.id, linked: false});
 
-		new google.maps.places.Autocomplete(element, options);
+		var autocomplete = new google.maps.places.Autocomplete(element, options);
 
 		element.addEventListener('input', correctInput);
+
+		// google.maps.event.addListener(autocomplete, 'place_changed', function() {
+
+		// });
 
 	}
 
@@ -104,6 +108,21 @@
 			element.setAttribute('data-autoplace-corrected-input', '');
 
 		}
+
+	}
+
+	var correctChange = function(event) {
+
+		var id = this.parentNode.getAttribute('aria-labelledby');
+
+		var element = document.getElementById(id);
+
+		element.setAttribute('data-autoplace-corrected-input', '');
+		element.setAttribute('data-autoplace-suggestion', '');
+		element.setAttribute('data-autoplace-corrected-suggestion', '');
+
+		element.dispatchEvent(new Event('autoplace-suggestion'));
+
 
 	}
 
@@ -249,18 +268,12 @@
 
 	var replaceDropdownItem = function(dropdownItem) {
 
-		var replacement = document.createElement('a');
-
-		replacement.innerHTML = dropdownItem.innerHTML;
-
-		dropdownItem.parentNode.replaceChild(replacement, dropdownItem);
-
-		dropdownItem = replacement;
-
-		dropdownItem.href = '#';
-
 		dropdownItem.classList.remove('pac-item');
 		dropdownItem.classList.add('dropdown-item');
+
+		dropdownItem.setAttribute('role', 'button');
+
+		dropdownItem.addEventListener('mousedown', correctChange);
 
 		for (var i = dropdownItem.children.length - 1; i >= 0; i--) {
 
@@ -288,11 +301,7 @@
 
 				if (span.children[j].className === 'pac-matched') {
 
-					replacement = document.createElement('strong');
-
-					replacement.innerHTML = span.children[j].innerHTML;
-
-					span.children[j].parentNode.replaceChild(replacement, span.children[j]);
+					span.children[j].convertElement('strong');
 
 				}
 
@@ -367,6 +376,18 @@
 		}
 
 	}
+
+	Element.prototype.convertElement = function(tag) {
+
+		var replacement = document.createElement(tag);
+
+		replacement.innerHTML = this.innerHTML;
+
+		this.parentNode.replaceChild(replacement, this);
+
+		return replacement;
+
+	};
 
 	stylesheetObserver();
 	dropdownMenuObserver();
