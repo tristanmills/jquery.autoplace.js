@@ -249,6 +249,16 @@
 
 	var replaceDropdownItem = function(dropdownItem) {
 
+		var replacement = document.createElement('a');
+
+		replacement.innerHTML = dropdownItem.innerHTML;
+
+		dropdownItem.parentNode.replaceChild(replacement, dropdownItem);
+
+		dropdownItem = replacement;
+
+		dropdownItem.href = '#';
+
 		dropdownItem.classList.remove('pac-item');
 		dropdownItem.classList.add('dropdown-item');
 
@@ -278,7 +288,7 @@
 
 				if (span.children[j].className === 'pac-matched') {
 
-					var replacement = document.createElement('strong');
+					replacement = document.createElement('strong');
 
 					replacement.innerHTML = span.children[j].innerHTML;
 
