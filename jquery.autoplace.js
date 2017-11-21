@@ -91,6 +91,14 @@
 
 			}
 
+		} else if (element.value === '') {
+
+			element.setAttribute('data-autoplace-corrected-input', '');
+			element.setAttribute('data-autoplace-suggestion', '');
+			element.setAttribute('data-autoplace-corrected-suggestion', '');
+
+			element.dispatchEvent(new Event('autoplace-suggestion'));
+
 		} else {
 
 			element.setAttribute('data-autoplace-corrected-input', '');

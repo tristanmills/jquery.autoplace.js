@@ -15,8 +15,29 @@
 		display: flex;
 		align-items: center;
 	}
-	.extra-space {
-		margin-bottom: 1rem;
+	.wrapper {
+		position: relative;
+	}
+	.suggestion-wrapper {
+		position: absolute;
+		top: 0;
+		left: 0;
+		right: 0;
+	}
+	.suggestion-wrapper .form-control {
+		color: grey;
+		border-color: transparent;
+	}
+	.suggestion-wrapper .input-group-addon,
+	.suggestion-wrapper .input-group-btn {
+		visibility: hidden;
+	}
+	.input-group .suggestion {
+		z-index: 1;
+	}
+	.autoplace,
+	.autoplace:focus {
+		background-color: transparent;
 	}
 	</style>
 
@@ -25,149 +46,17 @@
 <body class="vcenter">
 
 	<div class="container">
-		<div class="row extra-space">
-			<div class="col-lg-6">
-				<label for="default-example">Default</label>
-				<input type="text" class="form-control" placeholder="Enter an Address" id="default-example">
-			</div>
-			<div class="col-lg-6">
-				<label for="default-autoplace">Default</label>
-				<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="default-autoplace">
-			</div>
-		</div>
 		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-example">Form Group</label>
-					<input type="text" class="form-control" placeholder="Enter an Address" id="form-group-example">
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-autoplace">Form Group</label>
-					<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-group-autoplace">
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-grouright-p-example">Form Group - Input Group - Right</label>
+			<div class="col-lg-6 offset-lg-3">
+				<div class="form-group wrapper">
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Enter an Address" id="form-group-input-grouright-p-example">
+						<input type="text" class="form-control" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="autoplace">
 						<span class="input-group-btn">
 							<button class="btn btn-secondary" type="button">Search</button>
 						</span>
 					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-group-right-autoplace">Form Group - Input Group - Right</label>
-					<div class="input-group">
-						<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-group-input-group-right-autoplace">
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button">Search</button>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-group-left-example">Form Group - Input Group - Left</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control" placeholder="Enter an Address" id="form-group-input-group-left-example">
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-group-left-autoplace">Form Group - Input Group - Left</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-group-input-group-left-autoplace">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-group-both-example">Form Group - Input Group - Both</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control" placeholder="Enter an Address" id="form-group-input-group-both-example">
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button">Search</button>
-						</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-group-input-group-both-autoplace">Form Group - Input Group - Both</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-group-input-group-both-autoplace">
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button">Search</button>
-						</span>
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row extra-space">
-			<div class="col-lg-6">
-				<div class="form-inline">
-					<div class="form-group">
-						<label for="form-inline-form-group-example" class="mr-sm-2">Form Inline - Form Group</label>
-						<input type="text" class="form-control" placeholder="Enter an Address" id="form-inline-form-group-example">
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-inline">
-					<div class="form-group">
-						<label for="form-inline-form-group-autoplace" class="mr-sm-2">Form Inline - Form Group</label>
-						<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-inline-form-group-autoplace">
-					</div>
-				</div>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-inline-form-group-input-group-both-example" class="mr-sm-2">Form Inline - Form Group - Input Group - Both</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control" placeholder="Enter an Address" id="form-inline-form-group-input-group-both-example">
-						<span class="input-group-btn">
-							<button class="btn btn-secondary" type="button">Search</button>
-						</span>
-					</div>
-				</div>
-			</div>
-			<div class="col-lg-6">
-				<div class="form-group">
-					<label for="form-inline-form-group-input-group-both-autoplace" class="mr-sm-2">Form Inline - Form Group - Input Group - Both</label>
-					<div class="input-group">
-						<span class="input-group-addon">
-							<input type="checkbox">
-						</span>
-						<input type="text" class="form-control autoplace" placeholder="Enter an Address" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false" id="form-inline-form-group-input-group-both-autoplace">
+					<div class="input-group suggestion-wrapper">
+						<input type="text" class="form-control suggestion" tabindex="-1">
 						<span class="input-group-btn">
 							<button class="btn btn-secondary" type="button">Search</button>
 						</span>
@@ -189,24 +78,14 @@
 
 			'use strict';
 
-			var options = {
+			$('#autoplace').autoplace({
 				types: ['address'],
 				componentRestrictions: {country: 'us'},
-			};
+			});
 
-			// $('#default-autoplace').autoplace(options);
-			// $('#form-group-autoplace').autoplace(options);
-			// $('#form-group-input-group-right-autoplace').autoplace(options);
-			// $('#form-group-input-group-left-autoplace').autoplace(options);
-			// $('#form-group-input-group-both-autoplace').autoplace(options);
-			// $('#form-inline-form-group-autoplace').autoplace(options);
-			// $('#form-inline-form-group-input-group-both-autoplace').autoplace(options);
-
-			$('.autoplace').autoplace(options);
-
-			$('#default-autoplace').on('autoplace-suggestion', function(e) {
+			$('#autoplace').on('autoplace-suggestion', function(e) {
 				var suggestion = $(e.target).attr('data-autoplace-corrected-suggestion');
-				console.log(suggestion);
+				$('.suggestion').val(suggestion);
 			});
 
 		}(jQuery));
