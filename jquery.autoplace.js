@@ -41,9 +41,13 @@
 
 		element.addEventListener('input', correctInput);
 
-		// google.maps.event.addListener(autocomplete, 'place_changed', function() {
+		google.maps.event.addListener(autocomplete, 'place_changed', function() {
 
-		// });
+			var event = new Event('autoplace-chosen');
+
+			element.dispatchEvent(event);
+
+		});
 
 	}
 
@@ -65,11 +69,15 @@
 
 	}
 
-	var correctInput = function(event) {
+	var correctInput = function() {
 
 		var element = this;
 
-		if (event.inputType.includes('insert')) {
+		var inputType = element.oldValue && element.oldValue.length > element.value.length ? 'delete' : 'insert';
+
+		element.oldValue = element.value;
+
+		if (inputType === 'insert') {
 
 			var prediction = element.getAttribute('data-autoplace-prediction');
 
@@ -111,7 +119,7 @@
 
 	}
 
-	var correctChange = function(event) {
+	var correctChange = function() {
 
 		var id = this.parentNode.getAttribute('aria-labelledby');
 
@@ -180,7 +188,7 @@
 
 	}
 
-	var dropdownMenuObserver = function(e) {
+	var dropdownMenuObserver = function() {
 
 		var observer = new MutationObserver(function(mutations) {
 
