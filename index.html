@@ -83,14 +83,14 @@
 				componentRestrictions: {country: 'us'},
 			});
 
-			$('#autoplace').on('autoplace-suggestion', function(e) {
-				var suggestion = $(e.target).attr('data-autoplace-corrected-suggestion');
+			$('#autoplace').on('autoplace-suggestion', function(event) {
+				var suggestion = $(event.target).attr('data-autoplace-corrected-suggestion');
 				$('.suggestion').val(suggestion);
 			});
 
-			// $('#autoplace').on('autoplace-chosen', function(e) {
-			// 	console.log('chosen');
-			// });
+			$('#autoplace').on('autoplace-details', function(event) {
+				console.log(event.detail);
+			});
 
 		}(jQuery));
 

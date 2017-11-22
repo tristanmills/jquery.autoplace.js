@@ -204,8 +204,8 @@
 
 			$('.autoplace').autoplace(options);
 
-			$('#default-autoplace').on('autoplace-suggestion', function(e) {
-				var suggestion = $(e.target).attr('data-autoplace-corrected-suggestion');
+			$('#default-autoplace').on('autoplace-suggestion', function(event) {
+				var suggestion = $(event.target).attr('data-autoplace-corrected-suggestion');
 				console.log(suggestion);
 			});
 
