@@ -41,14 +41,6 @@
 
 		element.addEventListener('input', correctInput);
 
-		google.maps.event.addListener(autocomplete, 'place_changed', function() {
-
-			var event = new Event('autoplace-chosen');
-
-			element.dispatchEvent(event);
-
-		});
-
 	}
 
 	var generateId = function(element) {
@@ -119,18 +111,26 @@
 
 	}
 
-	var correctChange = function() {
+	var correctChange = function(event) {
 
-		var id = this.parentNode.getAttribute('aria-labelledby');
+		var dropdownItem = this;
 
-		var element = document.getElementById(id);
+		if (!dropdownItem.classList.contains('disabled')) {
 
-		element.setAttribute('data-autoplace-corrected-input', '');
-		element.setAttribute('data-autoplace-suggestion', '');
-		element.setAttribute('data-autoplace-corrected-suggestion', '');
+			var id = dropdownItem.parentNode.getAttribute('aria-labelledby');
 
-		element.dispatchEvent(new Event('autoplace-suggestion'));
+			var element = document.getElementById(id);
 
+			element.value = dropdownItem.textContent;
+
+			element.setAttribute('data-autoplace-corrected-input', '');
+			element.setAttribute('data-autoplace-suggestion', '');
+			element.setAttribute('data-autoplace-corrected-suggestion', '');
+
+			element.dispatchEvent(new Event('autoplace-suggestion'));
+			element.dispatchEvent(new Event('autoplace-chosen'));
+
+		}
 
 	}
 
@@ -169,10 +169,7 @@
 
 			var css = '';
 
-			css += '.dropdown-menu.pac-container { display: block; width: auto !important; }';
-			css += '.autoplace, .autoplace:focus { background-color: transparent; }';
-			css += '.prediction { border-color: transparent; color: grey; }';
-			css += '.input-group .prediction { z-index: 1; }';
+			css += '.autoplace-dropdown { display: block; width: auto !important; }';
 
 			var style = document.createElement('style');
 
@@ -232,7 +229,11 @@
 		}
 
 		dropdownMenu.classList.remove('pac-logo');
+		dropdownMenu.classList.remove('pac-container');
+
 		dropdownMenu.classList.add('dropdown-menu');
+		dropdownMenu.classList.add('autoplace-dropdown');
+
 		dropdownMenu.setAttribute('aria-labelledby', id);
 
 		dropdownItemObserver(dropdownMenu);
@@ -243,20 +244,33 @@
 
 		var observer = new MutationObserver(function(mutations) {
 
+			for (var i = dropdownMenu.children.length - 1; i >= 0; i--) {
+
+				if (dropdownMenu.children[i].classList.contains('dropdown-item')) {
+
+					dropdownMenu.children[i].remove();
+
+				}
+
+			}
+
 			mutations.forEach(function(mutation) {
 
-				if (
-					mutation.addedNodes.length &&
-					mutation.addedNodes[0].className === 'pac-item'
-				) {
+				if (mutation.addedNodes.length && mutation.addedNodes[0].classList.contains('pac-item')) {
 
 					replaceDropdownItem(mutation.addedNodes[0]);
+
+				} else if (mutation.addedNodes.length && !mutation.addedNodes[0].classList.contains('dropdown-item')) {
+
+					mutation.addedNodes[0].classList.add('dropdown-item');
 
 				}
 
 			});
 
 			var id = dropdownMenu.getAttribute('aria-labelledby');
+
+			document.getElementById(id).dispatchEvent(new Event('autoplace-menu'));
 
 			var suggestion = '';
 
@@ -276,10 +290,11 @@
 
 	var replaceDropdownItem = function(dropdownItem) {
 
-		dropdownItem.classList.remove('pac-item');
-		dropdownItem.classList.add('dropdown-item');
+		dropdownItem = dropdownItem.convertElement('a');
 
-		dropdownItem.setAttribute('role', 'button');
+		dropdownItem.href = '#';
+
+		dropdownItem.classList.remove('pac-item');
 
 		dropdownItem.addEventListener('mousedown', correctChange);
 
@@ -329,7 +344,7 @@
 
 		var prediction = '';
 
-		if (match) {
+		if (match && input !== suggestion) {
 
 			if (input.length === 1) {
 
